@@ -1,7 +1,5 @@
 """Command-line interface for YouTube Channel Downloader."""
 
-import sys
-from pathlib import Path
 from typing import Optional
 import typer
 from rich.console import Console
@@ -54,7 +52,7 @@ def main(
         # Validate cookie file if provided
         cookie_path = None
         if cookie_file:
-            console.print(f"[cyan]Validating cookie file...[/cyan]")
+            console.print("[cyan]Validating cookie file...[/cyan]")
             cookie_path = validate_cookie_file(cookie_file)
             console.print(f"[green]✓[/green] Cookie file validated: {cookie_path}")
 
@@ -134,12 +132,12 @@ def download(
         # Validate cookie file if provided
         cookie_path = None
         if cookie_file:
-            console.print(f"[cyan]Validating cookie file...[/cyan]")
+            console.print("[cyan]Validating cookie file...[/cyan]")
             cookie_path = validate_cookie_file(cookie_file)
             console.print(f"[green]✓[/green] Cookie file validated: {cookie_path}")
 
         # List videos first
-        console.print(f"[cyan]Fetching channel videos...[/cyan]")
+        console.print("[cyan]Fetching channel videos...[/cyan]")
         videos = list_channel_videos(
             channel_url=channel_url,
             cookie_file=cookie_path,

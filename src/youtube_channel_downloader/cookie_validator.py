@@ -1,7 +1,6 @@
 """Cookie validation utilities for YouTube Premium authentication."""
 
 from pathlib import Path
-from typing import Optional
 
 
 class CookieValidationError(Exception):

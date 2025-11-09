@@ -2,7 +2,7 @@
 
 import pytest
 from typer.testing import CliRunner
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 import tempfile
 from pathlib import Path
 

@@ -8,7 +8,6 @@ import tempfile
 from youtube_channel_downloader.downloader import (
     download_videos,
     display_download_summary,
-    DownloadError,
 )
 
 
@@ -79,7 +78,7 @@ def test_download_videos_with_cookie(mock_ydl_class, mock_videos):
     cookie_path = Path("/fake/cookies.txt")
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        stats = download_videos(
+        download_videos(
             videos=mock_videos,
             output_dir=tmpdir,
             cookie_file=cookie_path,
@@ -138,7 +137,7 @@ def test_download_creates_output_directory(mock_ydl_class, mock_videos):
     with tempfile.TemporaryDirectory() as tmpdir:
         output_dir = Path(tmpdir) / "new_folder" / "videos"
 
-        stats = download_videos(
+        download_videos(
             videos=mock_videos,
             output_dir=str(output_dir),
             dry_run=False,

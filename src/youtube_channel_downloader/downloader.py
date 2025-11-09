@@ -1,9 +1,8 @@
 """Video downloading functionality using yt-dlp."""
 
-import os
 import csv
 from pathlib import Path
-from typing import List, Dict, Any, Optional, Callable
+from typing import List, Dict, Any, Optional
 from datetime import datetime
 import yt_dlp
 from rich.console import Console
@@ -13,7 +12,6 @@ from rich.progress import (
     DownloadColumn,
     TransferSpeedColumn,
     TimeRemainingColumn,
-    TaskID,
 )
 
 
@@ -60,7 +58,7 @@ def download_videos(
     stats = {"total": len(videos), "success": 0, "failed": 0, "skipped": 0, "failed_videos": []}
 
     if dry_run:
-        console.print(f"[yellow]DRY RUN MODE - No files will be downloaded[/yellow]")
+        console.print("[yellow]DRY RUN MODE - No files will be downloaded[/yellow]")
 
     console.print(f"[cyan]Downloading {len(videos)} videos to: {output_path.absolute()}[/cyan]\n")
 
@@ -144,7 +142,7 @@ def download_videos(
             # Check if video is already downloaded
             if skip_existing and video_id in downloaded_ids:
                 console.print(f"[yellow][{idx}/{len(videos)}][/yellow] {video_title}")
-                console.print(f"[yellow]⊘ Already downloaded - skipping[/yellow]\n")
+                console.print("[yellow]⊘ Already downloaded - skipping[/yellow]\n")
                 stats["skipped"] += 1
                 continue
 
@@ -153,7 +151,7 @@ def download_videos(
                 video_file = output_path / f"{video_id}.mp4"
                 if video_file.exists():
                     console.print(f"[yellow][{idx}/{len(videos)}][/yellow] {video_title}")
-                    console.print(f"[yellow]⊘ File already exists - skipping[/yellow]\n")
+                    console.print("[yellow]⊘ File already exists - skipping[/yellow]\n")
                     stats["skipped"] += 1
                     # Add to downloaded_ids to track it
                     downloaded_ids.add(video_id)
@@ -224,7 +222,7 @@ def download_videos(
                     csv_file.flush()  # Ensure data is written immediately
 
                 stats["success"] += 1
-                console.print(f"[green]✓[/green] Downloaded successfully\n")
+                console.print("[green]✓[/green] Downloaded successfully\n")
 
             except yt_dlp.utils.DownloadError as e:
                 error_msg = str(e)
@@ -233,7 +231,7 @@ def download_videos(
                     {"id": video_id, "title": video_title, "error": error_msg}
                 )
                 console.print(f"[red]✗[/red] Failed: {error_msg}\n")
-                console.print(f"[red]Stopping due to download error[/red]")
+                console.print("[red]Stopping due to download error[/red]")
                 break  # Stop on download error
 
             except KeyboardInterrupt:
@@ -246,7 +244,7 @@ def download_videos(
                     {"id": video_id, "title": video_title, "error": str(e)}
                 )
                 console.print(f"[red]✗[/red] Unexpected error: {e}\n")
-                console.print(f"[red]Stopping due to unexpected error[/red]")
+                console.print("[red]Stopping due to unexpected error[/red]")
                 break  # Stop on unexpected error
 
     finally:

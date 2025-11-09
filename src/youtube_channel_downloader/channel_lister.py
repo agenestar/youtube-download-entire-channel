@@ -45,7 +45,7 @@ def list_channel_videos(
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            console.print(f"[cyan]Fetching channel information...[/cyan]")
+            console.print("[cyan]Fetching channel information...[/cyan]")
 
             # Extract channel/playlist info
             info = ydl.extract_info(channel_url, download=False)
@@ -61,12 +61,10 @@ def list_channel_videos(
             if "entries" in info:
                 videos = list(info["entries"])
                 channel_title = info.get("title", "Unknown Channel")
-                channel_id = info.get("channel_id") or info.get("id", "Unknown")
             else:
                 # Single video
                 videos = [info]
                 channel_title = info.get("channel", "Unknown Channel")
-                channel_id = info.get("channel_id", "Unknown")
 
             # Filter out None entries (removed/private videos)
             videos = [v for v in videos if v is not None]
