@@ -23,8 +23,7 @@ console = Console()
 
 def main(
     channel_url: str = typer.Argument(
-        ...,
-        help="YouTube channel URL (e.g., https://www.youtube.com/@channelname)"
+        ..., help="YouTube channel URL (e.g., https://www.youtube.com/@channelname)"
     ),
     cookie_file: Optional[str] = typer.Option(
         None,
@@ -47,7 +46,7 @@ def main(
 ):
     """
     List all videos from a YouTube channel without downloading.
-    
+
     This command validates the cookie file (if provided) and fetches
     metadata for all videos in the channel.
     """
@@ -58,24 +57,24 @@ def main(
             console.print(f"[cyan]Validating cookie file...[/cyan]")
             cookie_path = validate_cookie_file(cookie_file)
             console.print(f"[green]✓[/green] Cookie file validated: {cookie_path}")
-        
+
         # List videos
         videos = list_channel_videos(
             channel_url=channel_url,
             cookie_file=cookie_path,
             verbose=verbose,
         )
-        
+
         if not videos:
             console.print("[yellow]No videos found in channel[/yellow]")
             return
-        
+
         # Display results
         display_rows = None if max_display == 0 else max_display
         display_video_table(videos, max_rows=display_rows)
-        
+
         console.print(f"\n[green]Total videos: {len(videos)}[/green]")
-        
+
     except CookieValidationError as e:
         console.print(f"[red]Cookie validation error:[/red] {e}")
         raise typer.Exit(code=1)
@@ -94,8 +93,7 @@ def main(
 
 def download(
     channel_url: str = typer.Argument(
-        ...,
-        help="YouTube channel URL (e.g., https://www.youtube.com/@channelname/videos)"
+        ..., help="YouTube channel URL (e.g., https://www.youtube.com/@channelname/videos)"
     ),
     cookie_file: Optional[str] = typer.Option(
         None,
@@ -128,7 +126,7 @@ def download(
 ):
     """
     Download all videos from a YouTube channel in maximum quality.
-    
+
     Downloads videos using the best available quality (bestvideo+bestaudio).
     Files are saved with the format: YYYYMMDD - Video Title.mp4
     """
@@ -139,7 +137,7 @@ def download(
             console.print(f"[cyan]Validating cookie file...[/cyan]")
             cookie_path = validate_cookie_file(cookie_file)
             console.print(f"[green]✓[/green] Cookie file validated: {cookie_path}")
-        
+
         # List videos first
         console.print(f"[cyan]Fetching channel videos...[/cyan]")
         videos = list_channel_videos(
@@ -147,13 +145,13 @@ def download(
             cookie_file=cookie_path,
             verbose=verbose,
         )
-        
+
         if not videos:
             console.print("[yellow]No videos found in channel[/yellow]")
             return
-        
+
         console.print(f"[green]✓[/green] Found {len(videos)} videos to download\n")
-        
+
         # Download videos
         stats = download_videos(
             videos=videos,
@@ -163,14 +161,14 @@ def download(
             skip_existing=skip_existing,
             verbose=verbose,
         )
-        
+
         # Display summary
         display_download_summary(stats)
-        
+
         # Exit with error code if any downloads failed
-        if stats['failed'] > 0:
+        if stats["failed"] > 0:
             raise typer.Exit(code=1)
-        
+
     except CookieValidationError as e:
         console.print(f"[red]Cookie validation error:[/red] {e}")
         raise typer.Exit(code=1)
