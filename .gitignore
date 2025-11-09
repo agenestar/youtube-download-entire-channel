@@ -51,3 +51,5 @@ downloads/
 
 # Logs
 *.log
+
+.DS_Store

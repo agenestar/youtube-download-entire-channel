@@ -1,0 +1,11 @@
+# Example Netscape HTTP Cookie File
+# This is a sample file showing the format YouTube cookies should be in
+# 
+# To export your own cookies:
+# 1. Install a cookie export extension for your browser
+# 2. Visit youtube.com and log in
+# 3. Export cookies for youtube.com domain
+# 4. Save the file and use with --cookie-file option
+#
+# Format: domain flag path secure expiration name value
+.youtube.com	TRUE	/	TRUE	0	EXAMPLE_COOKIE	example_value
